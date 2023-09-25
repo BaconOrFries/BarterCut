@@ -1,0 +1,23 @@
+{% extends 'fypcore/base.html' %}
+
+{% block title %} Terms {% endblock %}
+
+{% block content %}
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-semibold mb-4">Terms of Use</h1>
+
+        <p>
+            Welcome to BarterCut. By accessing or using our services, you agree to comply with and be bound by the following terms and conditions. 
+            If you do not agree with these terms, please do not use our services.
+        </p>
+
+        <h2 class="text-xl font-semibold mt-4">1. Acceptance of Terms</h2>
+        <p>
+            By using our services, you acknowledge that you have read, understood, and accept these terms and all applicable laws and regulations. 
+            If you are using our services on behalf of an organization, you represent and warrant that you have the authority to bind that organization to these terms.
+        </p>
+
+        <h2 class="text-xl font-semibold mt-4">Contact Us</h2>
+        <p>If you have any questions about our terms of use, you can find our contact information <a href="{% url 'fypcore:contact' %}" class="text-sky-800">here</a>.</p>
+    </div>
+{% endblock %}

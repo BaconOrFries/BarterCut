@@ -1,0 +1,61 @@
+{% extends 'fypcore/base.html' %}
+
+{% block title %} {{item.name}} {% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-5 gap-6">
+    <div class="col-span-3">
+        {% if item.image %}
+            <img src="{{item.image.url}}" class="rounded-t-xl">
+        {% endif %}
+    </div>
+
+    <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
+        <h1 class="mb-6 text-3xl">{{ item.name }} </h1> 
+        <p class="text-gray-400"><strong>Cost: </strong>{{ item.point }} points</p>
+        <p class="text-gray-400"><strong>Listed By: </strong>{{ item.listed_by }}</p>
+        {% if item.description %}
+        <p class="text-gray-600">
+            <strong class="text-gray-500">Description:</strong><br>
+            {{ item.description }}
+        </p>
+        {% endif %}
+
+            {% if request.user == item.listed_by %}
+                <div class="mt-6 p-6 bg-white rounded-xl">
+                    <a href="{% url 'listing:edit_listing' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Edit</a>
+                    <a href="{% url 'listing:delete' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Remove</a> 
+                </div>
+            {% else %}
+                <a href="{% url 'message:message' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Message Seller</a>
+                {% if not item.is_sold %}
+                    <a href="{% url 'listing:barter_item' item.id%}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-blue-500 text-white rounded-xl hover:bg-blue-700">Barter Item</a>
+                {% endif %}
+            {% endif %}
+    </div>
+</div>
+
+<div class="mt-6 px-6 py-12 bg-gray-200 rounded-xl">
+    <h2 class="mb-12 text-2xl text-center">Similar Listings</h2>
+
+    <div class="grid grid-cols-3 gap-3">
+        {% for item in related_items %}
+            <div>
+                <a href="{% url 'listing:detail' item.id %}">
+                    <div>
+                        {% if item.image %}
+                            <img src="{{item.image.url}}" class="rounded-t-xl">
+                        {% endif %}
+                    </div>
+
+                    <div class="p-6 bg-white rounded-b-xl">
+                        <h2 class="text-2xl">{{ item.name }}</h2>
+                        <p class="text-gray-300">Point :{{ item.point }}</p>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
